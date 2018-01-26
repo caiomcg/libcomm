@@ -33,7 +33,6 @@ else
 CFLAGS += -DNDEBUG
 endif
 
-
 $(TARGET): $(OBJECTS)
 	@mkdir -p $(TARGETDIR)
 	@echo  "${P}Linking all targets...${N}"
