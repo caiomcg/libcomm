@@ -7,6 +7,11 @@ Uri::Uri(const std::string& url) : url_{url} {
 
 Uri::~Uri() {}
 
+std::ostream& operator<<(std::ostream& stream, const Uri& uri) {
+    stream << uri.url_;
+    return stream;
+}
+
 std::string Uri::getScheme() const {
     return this->scheme_;
 }

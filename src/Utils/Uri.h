@@ -14,6 +14,8 @@ public:
     Uri(const std::string& url);
     ~Uri();
 
+    friend std::ostream& operator<<(std::ostream& stream, const Uri& uri);
+
     std::string getScheme() const;
     std::string getHost() const;
     int getPort() const;
