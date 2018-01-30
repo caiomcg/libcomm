@@ -23,14 +23,14 @@ INCLIST := $(patsubst src/%,-I src/%,$(INCDIRS))
 BUILDLIST := $(patsubst src/%,$(BUILDDIR)/%,$(INCDIRS))
 
 # Shared Compiler Flags
-CFLAGS := -std=c++14 -O3 -Wall -Wextra
+CFLAGS := -std=c++14 -Wall -Wextra
 INC := -I include $(INCLIST) -I /usr/local/include
 LIB := -lm -lrt
 
 ifeq ($(debug), 1)
-CFLAGS += -g
+CFLAGS += -g -O0
 else
-CFLAGS += -DNDEBUG
+CFLAGS += -DNDEBUG -O3
 endif
 
 $(TARGET): $(OBJECTS)

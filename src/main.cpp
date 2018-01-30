@@ -1,11 +1,10 @@
 #include <iostream>
 
-#include "Uri.h"
+#include "DatagramSocket.h"
 
 auto main() -> int {
-    Uri uri{"udp://192.168.0.100:8080"};
-
-    std::clog << "Connecting to: " << uri << std::endl;
-
+    DatagramSocket datagram_socket{Uri{"udp://127.0.0.1:8080"}};
+    datagram_socket.bind();
+    
     return 0;
 }

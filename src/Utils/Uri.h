@@ -1,5 +1,4 @@
 #pragma once
-
 //Should comply with RFC 2396
 
 #include <regex>
@@ -11,6 +10,7 @@ private:
     std::string scheme_;
     std::string authority_;
 public:
+    Uri();
     Uri(const std::string& url);
     ~Uri();
 

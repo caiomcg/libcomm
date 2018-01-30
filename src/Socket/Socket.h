@@ -1,10 +1,10 @@
 #pragma once
 
-#include "Uri.h"
-
 #include <assert.h>
 #include <string.h>
 #include <unistd.h>   	 		 // Unix default header.
+
+#include "Uri.h"
 
 // Networking Headers
 //---------------------------------------------------------------------------------------------
@@ -15,14 +15,20 @@
 #include <sys/stat.h>    		 // Networking.
 //---------------------------------------------------------------------------------------------
 
+#include <iostream>
+
 class Socket {
 protected:
     Uri uri_;
-    int file_descriptor_;
 
+    int domain_;
+    int is_bound_;
+    int file_descriptor_;
+    
     struct sockaddr_in sockaddr_info_;
 public:
-    Socket();
+    Socket(const int& descriptor);
+    Socket(struct sockaddr_in address, int socket_type);
     Socket(const Uri uri, int domain = AF_INET) noexcept(false);
     virtual ~Socket();
 
@@ -31,9 +37,9 @@ public:
 
     // Socket(Socket&& rhs);
     // Socket& operator=(Socket&& rhs);
-
+    void bind() noexcept(false);
     Uri getUri() const;
+    struct sockaddr_in getSocketInfo() const;
 
-    virtual void bind() noexcept(false) = 0;
     virtual void close() noexcept(false) = 0;
 };

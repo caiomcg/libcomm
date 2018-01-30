@@ -1,5 +1,7 @@
 #include "Uri.h"
 
+Uri::Uri() : url_{""}{};
+
 Uri::Uri(const std::string& url) : url_{url} {
     scheme_    = this->url_.substr(0, this->url_.find_first_of(':'));
     authority_ = this->url_.substr(this->url_.find_first_of(':') + 1);
