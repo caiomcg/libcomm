@@ -41,14 +41,16 @@ public:
     Socket(const Uri uri, int domain = AF_INET) noexcept(false);
     virtual ~Socket();
 
-    void setFlags(int flags) noexcept(false);
-
-    // Socket(Socket& rhs);
-    // Socket& operator=(Socket& rhs);
+    Socket(const Socket& rhs);
+    Socket& operator=(const Socket& rhs);
 
     // Socket(Socket&& rhs);
     // Socket& operator=(Socket&& rhs);
+    
+    void setFlags(int flags) noexcept(false);
+
     void bind() noexcept(false);
+    
     Uri getUri() const;
     struct sockaddr_in getSocketInfo() const;
 

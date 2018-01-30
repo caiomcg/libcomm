@@ -40,6 +40,27 @@ Socket::Socket(const Uri uri, int domain) : uri_{uri}, domain_{domain}, is_bound
 
 Socket::~Socket() {}
 
+Socket::Socket(const Socket& rhs) {
+    this->uri_ = rhs.uri_;
+
+    this->domain_ = rhs.domain_;
+    this->is_bound_ = rhs.is_bound_;
+    this->file_descriptor_ = rhs.file_descriptor_;
+    
+    this->sockaddr_info_ = rhs.sockaddr_info_;
+}
+
+Socket& Socket::operator=(const Socket& rhs) {
+    this->uri_ = rhs.uri_;
+
+    this->domain_ = rhs.domain_;
+    this->is_bound_ = rhs.is_bound_;
+    this->file_descriptor_ = rhs.file_descriptor_;
+    
+    this->sockaddr_info_ = rhs.sockaddr_info_;
+    return *this;
+}
+
 void Socket::setOpt(int level, int opt_name) {
     int flag = 1;
 

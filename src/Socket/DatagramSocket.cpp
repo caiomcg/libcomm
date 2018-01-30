@@ -6,6 +6,19 @@ DatagramSocket::~DatagramSocket() {
     this->close();
 }
 
+DatagramSocket::DatagramSocket(const DatagramSocket& rhs) : Socket(rhs) {}
+
+DatagramSocket& DatagramSocket::operator=(const DatagramSocket& rhs) {
+    this->uri_ = rhs.uri_;
+
+    this->domain_ = rhs.domain_;
+    this->is_bound_ = rhs.is_bound_;
+    this->file_descriptor_ = rhs.file_descriptor_;
+    
+    this->sockaddr_info_ = rhs.sockaddr_info_;
+    return *this;
+}
+
 DatagramSocket::DatagramSocket(DatagramSocket&& rhs) : Socket(std::forward<Socket>(rhs)) {}
 
 std::ostream& operator<<(std::ostream& stream, const DatagramSocket& datagram_socket) {
@@ -53,7 +66,7 @@ DatagramPacket::DatagramPacket(std::shared_ptr<uint8_t> data, std::size_t size, 
     this->size_ = size;
 }
 
-DatagramSocket& DatagramPacket::getClient() {
+DatagramSocket DatagramPacket::getClient() {
     return client_address_;
 }
 

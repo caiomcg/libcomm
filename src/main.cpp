@@ -14,13 +14,15 @@ auto main() -> int {
     buffer.get()[3] = 'T';
     buffer.get()[4] = '\0';
 
-    std::clog << "Listening at: " << datagram_socket << std::endl;
+    auto copy = datagram_socket; // Copy constructed
+
+    std::clog << "Listening at: " << copy << std::endl;
 
     auto packet = datagram_socket.receive(1024);
 
     std::clog << "Message: " << packet.getData().get() << " - Size: " << packet.getSize() << std::endl;
     std::clog << "Sending to: " << packet.getClient() << " - message: " << buffer.get() << std::endl;
-
     datagram_socket.send(packet.getClient(), buffer, 5);
+    
     return 0;
 }
