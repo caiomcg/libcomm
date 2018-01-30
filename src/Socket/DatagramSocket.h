@@ -15,7 +15,6 @@ public:
 
     friend std::ostream& operator<<(std::ostream& stream, const DatagramSocket& datagram_socket);
 
-    void send(const DatagramSocket& socket, std::unique_ptr<uint8_t> data, const std::size_t& size) noexcept(false);
     void send(const DatagramSocket& socket, std::shared_ptr<uint8_t> data, const std::size_t& size) noexcept(false);
 
     DatagramPacket receive(const std::size_t& buffer_size) noexcept(false);

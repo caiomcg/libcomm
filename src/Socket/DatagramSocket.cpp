@@ -13,15 +13,9 @@ std::ostream& operator<<(std::ostream& stream, const DatagramSocket& datagram_so
     return stream;
 }
 
-void DatagramSocket::send(const DatagramSocket& socket, std::unique_ptr<uint8_t> data, const std::size_t& size) {
-    auto address = socket.getSocketInfo();
-    if (sendto(this->file_descriptor_, data.get(), size, 0, (struct sockaddr *) &address, sizeof(address)) == -1) {
-        throw std::runtime_error("Coulf not send Datagram data");
-    }
-}
-
 void DatagramSocket::send(const DatagramSocket& socket, std::shared_ptr<uint8_t> data, const std::size_t& size) {
     auto address = socket.getSocketInfo();
+
     if (sendto(this->file_descriptor_, data.get(), size, 0, (struct sockaddr *) &address, sizeof(address)) == -1) {
         throw std::runtime_error("Coulf not send Datagram data " + std::string(strerror(errno)));
     }
