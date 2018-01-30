@@ -40,8 +40,34 @@ Socket::Socket(const Uri uri, int domain) : uri_{uri}, domain_{domain}, is_bound
 
 Socket::~Socket() {}
 
+void Socket::setOpt(int level, int opt_name) {
+    int flag = 1;
+
+    if (setsockopt(this->file_descriptor_, level, opt_name, &flag, sizeof(int)) == -1) {
+        throw std::runtime_error("Could not setsockopt: " + std::string(strerror(errno)));
+    }
+}
+
+void Socket::setFlags(int flags) {
+    if (flags & FLAG::REUSE_ADDR) {
+        this->setOpt(SOL_SOCKET, SO_REUSEADDR);
+    }
+    
+    if (flags & FLAG::BROADCAST) {
+        this->setOpt(SOL_SOCKET, SO_BROADCAST);
+    }
+
+    if (flags & FLAG::MULTICAST_IF) {
+        this->setOpt(IPPROTO_IP, IP_MULTICAST_IF);
+    }
+
+    if (flags & FLAG::MULTICAST_LOOP) {
+        this->setOpt(IPPROTO_IP, IP_MULTICAST_LOOP);
+    }
+}
+
 void Socket::bind() {
-    if (::bind(this->file_descriptor_, (struct sockaddr*)&this->sockaddr_info_, sizeof(this->sockaddr_info_)) == -1){
+    if (::bind(this->file_descriptor_, (struct sockaddr*)&this->sockaddr_info_, sizeof(this->sockaddr_info_)) == -1) {
 		throw std::runtime_error("Could not bind the socket: " + std::string(strerror(errno)));
 	}
 

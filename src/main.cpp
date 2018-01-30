@@ -3,7 +3,8 @@
 #include "DatagramSocket.h"
 
 auto main() -> int {
-    DatagramSocket datagram_socket{Uri{"udp://127.0.0.1:8080"}};
+    DatagramSocket datagram_socket{Uri{"udp://@:8080"}};
+    datagram_socket.setFlags(DatagramSocket::FLAG::REUSE_ADDR);
     datagram_socket.bind();
 
     auto buffer = std::make_shared<uint8_t>(1024);
@@ -18,7 +19,6 @@ auto main() -> int {
     auto packet = datagram_socket.receive(1024);
 
     std::clog << "Message: " << packet.getData().get() << " - Size: " << packet.getSize() << std::endl;
-
     std::clog << "Sending to: " << packet.getClient() << " - message: " << buffer.get() << std::endl;
 
     datagram_socket.send(packet.getClient(), buffer, 5);

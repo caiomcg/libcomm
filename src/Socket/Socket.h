@@ -18,6 +18,8 @@
 #include <iostream>
 
 class Socket {
+private:
+    void setOpt(int level, int opt_name) noexcept(false);
 protected:
     Uri uri_;
 
@@ -27,10 +29,19 @@ protected:
     
     struct sockaddr_in sockaddr_info_;
 public:
+    enum FLAG {
+        REUSE_ADDR = 1 << 0,
+        BROADCAST = 1 << 1,
+        MULTICAST_IF = 1 << 2,
+        MULTICAST_LOOP = 1 << 3
+    };
+
     Socket(const int& descriptor);
     Socket(struct sockaddr_in address, int socket_type);
     Socket(const Uri uri, int domain = AF_INET) noexcept(false);
     virtual ~Socket();
+
+    void setFlags(int flags) noexcept(false);
 
     // Socket(Socket& rhs);
     // Socket& operator=(Socket& rhs);
